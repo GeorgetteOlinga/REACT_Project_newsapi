@@ -1,33 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from './component/Header'
+import Footer from './component/Footer'
+import Filters from './component/Filters'
+import Nav from './component/Nav'
+import Headlines from './component/Headlines'
+import ArticlePage from './component/ArticlePage'
+import { useState, useEffect } from 'react'
+import { fetchNews } from './lib/api'
+
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  function showAll() {
+    return ()=>true
+  }
+
+  const [headlines, setHeadlines] = useState([])
+  const [country, setCountry] = useState({name: 'United States', code: 'us'})
+  const [filter, setFilter] = useState(showAll)
+  const [filteredHeadlines, setFilteredHeadlines] = useState([])
+
+  async function renderNews() {
+    const data = await fetchNews('/top-headlines', '?country='+country.code)
+    // console.log(data)
+    setHeadlines(data.articles)
+    setFilteredHeadlines(data.articles)
+  }
+
+  useEffect(()=>{
+    renderNews()
+  },[country])
+
+  useEffect(()=>{
+    setFilteredHeadlines(headlines.filter(filter))
+  },[filter])
+
+  useEffect(()=>{
+    console.log('filtered: ', filteredHeadlines)
+  },[filteredHeadlines])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+      <div id="container">
+        <Nav />
+        <main>
+          <Routes>
+            <Route index element={<Headlines filter={filter} headlines={filteredHeadlines} country={country}/>} />
+            <Route headlines={filteredHeadlines} path="/article/:index" element={<ArticlePage />}/>
+          </Routes>
+        </main>
+        <Filters 
+          setCountry={setCountry}
+          setFilter={setFilter}
+          />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Footer />
     </>
   )
 }
