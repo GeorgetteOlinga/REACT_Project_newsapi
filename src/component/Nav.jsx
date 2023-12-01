@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom"
+
 export default function Nav() {
   return (
-    <div>Nav</div>
+    <nav>
+      <ul>
+        <Link to="/">Home</Link>
+      </ul>
+    </nav>
   )
 }

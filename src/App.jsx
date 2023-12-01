@@ -50,7 +50,7 @@ function App() {
     <>
       <Header />
       <div id="container">
-        <Nav />
+        {/* <Nav /> */}
         <main>
           <Routes>
             <Route index element={<Headlines filter={filter} headlines={filteredHeadlines} country={country}/>} />
