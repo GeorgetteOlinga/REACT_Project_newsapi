@@ -6,10 +6,15 @@ import Headlines from './component/Headlines'
 import ArticlePage from './component/ArticlePage'
 import { useState, useEffect } from 'react'
 import { fetchNews } from './lib/api'
-
+// npm i jotai
 import { Routes, Route } from 'react-router-dom'
+import { atom, useAtom } from 'jotai'
+
+export const _newsStore = atom([])
 
 function App() {
+
+  const [newsStore, setNewsStore] = useAtom(_newsStore)
 
   function showAll() {
     return ()=>true
@@ -32,11 +37,13 @@ function App() {
   },[country])
 
   useEffect(()=>{
-    setFilteredHeadlines(headlines.filter(filter))
+    let filtered = headlines.filter(filter)
+    setFilteredHeadlines([...filtered])
   },[filter])
 
   useEffect(()=>{
-    console.log('filtered: ', filteredHeadlines)
+    // console.log('filtered: ', filteredHeadlines)
+    setNewsStore(filteredHeadlines)
   },[filteredHeadlines])
 
   return (

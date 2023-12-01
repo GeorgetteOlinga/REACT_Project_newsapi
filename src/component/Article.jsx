@@ -24,7 +24,9 @@ export default function Article({article, index}) {
     <Link to={href}>
       <article className="headline">
           <h3>{article.title}</h3>
-          <h4>by {article.author || "Unknown"} | {article.publishedAt}</h4>
+          <h4 dangerouslySetInnerHTML={{
+            __html: `by ${article.author || 'Unknown'}`
+          }}></h4>
           <p>{article.description}</p>
       </article>
     </Link>
