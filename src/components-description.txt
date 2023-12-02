@@ -1,0 +1,20 @@
+Article
+    A card for articles to be shown on the home route
+
+ArticlePage
+    The component to be shown on the article route, showing the selected article
+
+Filters
+    The aside where the user can filter the articles
+
+Footer
+    The footer with my name and a copyright statement
+
+Header
+    The header with the naem of my app, which is also a link to the home page
+
+Headlines
+    The component that maps through the articles and displays them on the home route
+
+Nav
+    Was originally going to be a nav, but I decided I didn't need it since the user can easily navigate to the homepage by clicking on the logo
