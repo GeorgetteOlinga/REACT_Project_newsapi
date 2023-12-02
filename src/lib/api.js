@@ -25,12 +25,13 @@ const ROOT = "https://newsapi.org/v2"
 
 async function fetchNews(endpoint, params) {
     const res = await fetch(ROOT + endpoint + params + "&apikey=" + KEY)
+    const data = await res.json()
     if (!res.ok) {
         console.log("fetchNews failed")
         console.log("failed response:", res)
+        console.log("body:", data)
         return res
     }
-    const data = await res.json()
     return data
 }
 
