@@ -9,7 +9,6 @@ import { fetchNews } from './lib/api'
 // npm i jotai
 import { Routes, Route } from 'react-router-dom'
 import { atom, useAtom } from 'jotai'
-
 export const _newsStore = atom([])
 
 function App() {
@@ -25,8 +24,13 @@ function App() {
   const [filter, setFilter] = useState(showAll)
   const [filteredHeadlines, setFilteredHeadlines] = useState([])
 
+  /*
+    I did not realize it until deployment, but this news API does not allow free requests from the browser. They only allow free requests from localhost. So in deployment I am using dummy data.
+  */
+
   async function renderNews() {
     const data = await fetchNews('/top-headlines', '?country='+country.code)
+    console.log(data.articles)
     // console.log(data)
     setHeadlines(data.articles)
     setFilteredHeadlines(data.articles)

@@ -1,3 +1,5 @@
+import dummyData from "./dummy-data"
+
 const KEY = "ab530159d0c64a2f822b63c95af99714"
 const ROOT = "https://newsapi.org/v2"
 
@@ -30,7 +32,7 @@ async function fetchNews(endpoint, params) {
         console.log("fetchNews failed")
         console.log("failed response:", res)
         console.log("body:", data)
-        return res
+        return dummyData
     }
     return data
 }
